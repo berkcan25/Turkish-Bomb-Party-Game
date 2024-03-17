@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomb Party Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="feedback-notifications">
+        <p id="feedback"></p>
+    </div>
+
+    <header>
+        <h1>Bomba Partisi</h1>
+        <!-- Add any navigation links or buttons here -->
+    </header>
+
+    <div class="syllable-display">
+        <h2>Hece: <span id="current-syllable">Syllable Here</span></h2>
+    </div>
+
+    <div class="timer">
+        <h3>Kalan zaman: <span id="timer">60</span> saniye</h3>
+    </div>
+
+    <div class="word-input">
+        <input type="text" placeholder="Enter word here" id="word-input">
+        <button onclick="submitWord()">Gönder</button>
+    </div>
+
+    <div class="score">
+        <h3>Puan: <span id="score">0</span></h3>
+    </div>
+
+    <div class="scoreboard" id="scoreboard">
+        <h3>Scoreboard</h3>
+        <ul id="score-list">
+            <!-- Score entries will be dynamically added here -->
+        </ul>
+    </div>
+
+    <div class="chat-interface">
+        <!-- Chat interface elements go here -->
+    </div>
+
+    <div class="game-controls">
+        <button onclick="startGame()">Başlat</button>
+        <button onclick="pauseGame()">Durdur</button>
+        <button onclick="restartGame()">Sıfırla</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

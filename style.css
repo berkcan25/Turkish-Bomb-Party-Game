@@ -1,0 +1,127 @@
+/* styles.css */
+
+/* Header Section Styling */
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* Syllable Display Styling */
+.syllable-display {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#current-syllable {
+    font-size: 36px;
+    color: #333;
+}
+
+/* Turn Timer Styling */
+.timer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#timer {
+    font-size: 24px;
+    color: red;
+}
+
+/* Word Input Field Styling */
+.word-input {
+    text-align: center;
+    margin-top: 20px;
+}
+
+input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Scoreboard Styling */
+.scoreboard {
+    margin-top: 20px;
+}
+
+.scoreboard h3 {
+    text-align: center;
+}
+
+#score-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.score-entry {
+    margin-bottom: 5px;
+}
+
+/* Chat Interface Styling */
+.chat-interface {
+    margin-top: 20px;
+}
+
+/* Game Controls Styling */
+.game-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    margin: 0 10px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Feedback and Notifications Styling */
+.feedback-notifications {
+    display: none;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 4em;
+    padding: 20px;
+    position: fixed;
+    width: 20%;
+    min-width: 40ch;
+    background-color: black;
+}
+
+#feedback {
+    color: green;
+    font-weight: bold;
+    margin: 0
+}
+
+#game-notification {
+    color: blue;
+}
+
