@@ -1,4 +1,5 @@
-def syllable_frequencies(input, output_freq, output_words):
+import json
+def syllable_frequencies(input, words_json, freqs_json):
     max_syllable_length = 3
     syllable_freq = {}
     syllable_words = {}
@@ -31,10 +32,12 @@ def syllable_frequencies(input, output_freq, output_words):
                     if syllable in word:
                         syllable_freq[syllable] += 1
                         syllable_words[syllable].append(word)
-    with open(output_freq, "w", encoding="utf-8") as output_file:
-        output_file.writelines(str(sorted(syllable_freq.items(), key= lambda item : item[1], reverse=True)))
-    with open(output_words, "w", encoding="utf-8") as output_file:
-        output_file.writelines(str(sorted(syllable_words.items(), key= lambda item : len(item[1]), reverse=True)))
+    with open(words_json, "w", encoding="utf-8") as json_out:
+        word_json = json.dumps(syllable_words, indent=4, ensure_ascii=False)
+        json_out.write(word_json)
+    with open(freqs_json, "w", encoding="utf-8") as json_out:
+        freq_json = json.dumps(syllable_freq, indent=4, ensure_ascii=False)
+        json_out.write(freq_json)
     print("done!")
 
 def turkish_uppercase(text: str):
@@ -44,7 +47,7 @@ def turkish_lowercase(text):
     return text.replace("I", "ı").replace("İ", "i").lower()
 
 input_file = "fixed_words.txt"
-output_freq_file = "syllable_freq.txt"
-output_words_file = "syllable_words.txt"
+words_json = "./Bomba Partisi Site/words.json"
+freqs_json = "./Bomba Partisi Site/freqs.json"
 
-syllable_frequencies(input_file, output_freq_file, output_words_file)
+syllable_frequencies(input_file, words_json, freqs_json)
