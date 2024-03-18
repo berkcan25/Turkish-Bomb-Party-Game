@@ -8,6 +8,7 @@ This project is a clone of the popular online word game "Bomb Party". The game c
 ![SS1](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/21d3e274-111d-4190-9fef-e12b709631a2)
 
 ## Features
+- **Word Knowledge**: Expand and renew your vocabulary with thousands of words!
 - **Turn Timer**: A countdown timer starts when a new syllable is displayed, ends game when it reaches zero.
 - **Scoring System**: Players earn points for correctly guessed words, and you can compare scores locally.
 - **Lives**: Stay in the game with lives that can be refilled by collecting all of the letters! Acquire letters buy using them in your guesses.
