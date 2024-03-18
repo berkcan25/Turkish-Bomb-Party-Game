@@ -11,7 +11,7 @@ This project is a clone of the popular online word game "Bomb Party". The game c
 - **Word Knowledge**: Expand and renew your vocabulary with thousands of words!
 - **Turn Timer**: A countdown timer starts when a new syllable is displayed, ends game when it reaches zero.
 - **Scoring System**: Players earn points for correctly guessed words, and you can compare scores locally.
-- **Lives**: Stay in the game with lives that can be refilled by collecting all of the letters! Acquire letters buy using them in your guesses.
+- **Lives**: Stay in the game with lives that can be refilled by collecting all of the letters! Acquire letters buy using them in your guesses. But be careful, the game ends when you lose all of your lives!
 - **Interactive User Interface**: The game provides feedback to players on their actions, including helpful tips to improve performance and improve vocabulary.
 
 ## Getting Started
