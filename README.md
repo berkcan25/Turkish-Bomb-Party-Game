@@ -1,6 +1,6 @@
 # Turkish Bomb Party 💣💣
 
-[[Turkish README.md|Türkçe]]
+[[Türkçe|Turkish README.md]]
 
 ## Overview
 This project is a clone of the popular online word game "Bomb Party". The game challenges players to quickly think of words that match a given syllable before a timer runs out. This repository contains the code for replicating the gameplay experience of Bomb Party, including a wide range of syllables to help your vocabulary, with a turn timer to up the ante.
