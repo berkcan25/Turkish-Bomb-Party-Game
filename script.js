@@ -1,33 +1,66 @@
-// game.js
-
-// 1. Turn Timer and Game End
-let timeLimit = 10; // seconds
-let timerInterval;
-
-//game state
-let gameActive = false;
-let maxNumberOfLives = 3;
-let numberOfLives = 3;
-
 //html elements
 const timer = document.getElementById("timer");
-timer.innerHTML = timeLimit;
 const feedbackNotifs = document.getElementsByClassName("feedback-notifications")[0];
 const wordInput = document.getElementById("word-input");
 const letters = document.getElementsByClassName("letter");
 
-//global variables
+// Turn Timer and Game End
+let timeLimit = 10; // seconds
+let timerInterval;
+
+// Lives
+let maxNumberOfLives = 3;
+let numberOfLives = 3;
+
+
+// game state
+let gameActive = false;
+
+
+// global variables
 let validSyllables;
 let wordData;
 let usedWords;
 
+// On Startup
+document.getElementById("word-input").addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        submitWord();
+    }
+});
 
-//uppercase lowercase
-function turkishUpperCase(text) {
-    return text.replace(/i/g, "İ").replace(/ı/g, "I").toUpperCase();
+timer.innerHTML = timeLimit;
+
+
+// Game Flow Control
+//TODO: reset points 
+async function startGame() {
+    if (!gameActive) {
+        gameActive = true;
+        await gameInit();
+        fetchSyllable();
+        startTimer();
+    }
 }
-function turkishLowerCase(text) {
-    return text.replace(/I/g, "ı").replace(/İ/g, "i").toLowerCase();
+
+async function gameInit() {
+    resetLetters();
+    numberOfLives = 3;
+    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+
+    //change in options
+    const minWordCount = 30;
+    const freqResponse = await fetch("./freqs.json")
+    const freqData = await freqResponse.json();
+    const syllables = Object.keys(freqData);
+    validSyllables = syllables.filter((syllable) => freqData[syllable] > minWordCount);
+
+    const wordResponse = await fetch("./words.json")
+    wordData = await wordResponse.json();
+
+    wordInput.value = "";
+    wordInput.focus();
+    usedWords = [];
 }
 
 function startTimer() {
@@ -56,32 +89,6 @@ function startTimer() {
     }, 1000);
 }
 
-function restartGame() {
-
-}
-
-function decreaseLives() {
-    numberOfLives--;
-    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
-    let dead = numberOfLives <= 0;
-    return dead;
-}
-
-function increaseLives() {
-    if (numberOfLives >= maxNumberOfLives) {
-        return;
-    } else {
-        numberOfLives++;
-        document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
-    }
-}
-
-function showPotentialWord(currentSyllable, isFinal = false) {
-    const validWords = getValidWords(currentSyllable);
-    const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
-    showFeedbackMessage(`${isFinal ? "Oyun Bitti!\n" : ""}Kullanabildiğin kelime: ${randomWord}`);
-}
-
 function endGame() {
     // Display final scores and handle game end logic
     clearInterval(timerInterval);
@@ -99,7 +106,42 @@ function endGame() {
     }
 }
 
-// 2. Fetching and Displaying Syllables
+
+function restartGame() {
+    endGame();
+    startGame();
+}
+
+// Helper Functions
+
+// Lives
+function decreaseLives() {
+    numberOfLives--;
+    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+    let dead = numberOfLives <= 0;
+    return dead;
+}
+
+function increaseLives() {
+    if (numberOfLives >= maxNumberOfLives) {
+        return;
+    } else {
+        numberOfLives++;
+        document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+    }
+}
+
+// Words/Syllables
+const getValidWords = ((syllable) => wordData[syllable]);
+
+function showPotentialWord(currentSyllable, isFinal = false) {
+    const validWords = getValidWords(currentSyllable);
+    const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
+    showFeedbackMessage(`${isFinal ? "Oyun Bitti!\n" : ""}Kullanabildiğin kelime: ${randomWord}`);
+}
+
+
+// Fetching and Displaying Syllables
 function fetchSyllable() {
     let includesAll = true;
     let fetchedSyllable;
@@ -118,7 +160,6 @@ function fetchSyllable() {
     document.getElementById("current-syllable").innerHTML = fetchedSyllable;
 }
 
-// 3. Word Validation and Scoring
 function submitWord() {
     if (wordData === undefined || !gameActive) {
         showFeedbackMessage("Önce oyunu başlat.");
@@ -155,6 +196,7 @@ function submitWord() {
     }
 }
 
+// Letters
 function allLettersUsed() {
     for (let i = 0; i < letters.length; i++) {
         if (!letters[i].classList.contains("used")) {
@@ -179,6 +221,16 @@ function resetLetters() {
     }
 }
 
+//uppercase lowercase
+function turkishUpperCase(text) {
+    return text.replace(/i/g, "İ").replace(/ı/g, "I").toUpperCase();
+}
+function turkishLowerCase(text) {
+    return text.replace(/I/g, "ı").replace(/İ/g, "i").toLowerCase();
+}
+
+
+// Feedback
 let feedbackTimer = null;
 
 function showFeedbackMessage(message) {
@@ -193,6 +245,7 @@ function showFeedbackMessage(message) {
     }, 5000);
 }
 
+// Score
 function awardPoint() {
     const scoreElement = document.getElementById("score");
     let currentScore = parseInt(scoreElement.textContent);
@@ -212,60 +265,3 @@ function addScoreToScoreboard() {
     scoreEl.title = new Date().toLocaleString();
     scoreboardElement.appendChild(scoreEl);
 }
-
-const getValidWords = ((syllable) => wordData[syllable]);
-
-function isCorrectWord(word, syllable) {
-    // Check if the given word is correct for the given syllable
-    // Example implementation: return true;
-}
-
-// 4. Error Handling
-// Implement error handling as needed for unexpected input or errors during gameplay
-
-// 5. Game Flow Control
-//TODO: reset points 
-async function startGame() {
-    if (!gameActive) {
-        gameActive = true;
-        startTimer();
-        await gameInit();
-        fetchSyllable();
-    }
-}
-
-
-
-async function gameInit() {
-    resetLetters();
-    numberOfLives = 3;
-    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
-
-    //change in options
-    const minWordCount = 30;
-    const freqResponse = await fetch("./freqs.json")
-    const freqData = await freqResponse.json();
-    const syllables = Object.keys(freqData);
-    validSyllables = syllables.filter((syllable) => freqData[syllable] > minWordCount);
-
-    const wordResponse = await fetch("./words.json")
-    wordData = await wordResponse.json();
-
-    wordInput.value = "";
-    wordInput.focus();
-    usedWords = [];
-}
-// 6. Interactivity and User Experience
-document.getElementById("word-input").addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        submitWord();
-    }
-});
-
-
-
-
-// 7. Integration with HTML and CSS
-// Ensure the JavaScript functions and game logic are integrated correctly with the HTML and CSS elements of the game interface
-
-// have feedback

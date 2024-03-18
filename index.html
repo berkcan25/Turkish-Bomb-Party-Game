@@ -7,85 +7,86 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="feedback-notifications">
-        <p id="feedback"></p>
-    </div>
-
-    <header>
-        <h1>Bomba Partisi</h1>
-        <!-- Add any navigation links or buttons here -->
-    </header>
-
-    <div class="syllable-display">
-        <h2>Hece: <span id="current-syllable">???</span></h2>
-    </div>
-
-    <div class="timer">
-        <h3>Kalan zaman: <span id="timer">10</span> saniye</h3>
-    </div>
-
-    <div class="word-input">
-        <input type="text" placeholder="Kelime" id="word-input">
-        <button onclick="submitWord()">Gönder</button>
-    </div>
-
-    <div class="lives">
-        <!-- 🖤🖤🖤 -->
-        <!-- 💖💖💖 -->
-        <h2 id="lives">💖💖💖</h2>
-    </div>
-
-    <div id="letter-box">
-        <div class="letter">a</div>
-        <div class="letter">b</div>
-        <div class="letter">c</div>
-        <div class="letter">ç</div>
-        <div class="letter">d</div>
-        <div class="letter">e</div>
-        <div class="letter">f</div>
-        <div class="letter">g</div>
-        <div class="letter">ğ</div>
-        <div class="letter">h</div>
-        <div class="letter">ı</div>
-        <div class="letter">i</div>
-        <div class="letter">j</div>
-        <div class="letter">k</div>
-        <div class="letter">l</div>
-        <div class="letter">m</div>
-        <div class="letter">n</div>
-        <div class="letter">o</div>
-        <div class="letter">ö</div>
-        <div class="letter">p</div>
-        <div class="letter">r</div>
-        <div class="letter">s</div>
-        <div class="letter">ş</div>
-        <div class="letter">t</div>
-        <div class="letter">u</div>
-        <div class="letter">ü</div>
-        <div class="letter">v</div>
-        <div class="letter">y</div>
-        <div class="letter">z</div>
-    </div>
-
-    <div class="score">
-        <h3>Puan: <span id="score">0</span></h3>
-    </div>
-
-    <div class="scoreboard" id="scoreboard">
-        <h3 id="scoreboard-title">Puan tablosu</h3>
-        <ul id="score-list">
-            <!-- Score entries will be dynamically added here -->
-        </ul>
-    </div>
-
-    <div class="chat-interface">
-        <!-- Chat interface elements go here -->
-    </div>
-
-    <div class="game-controls">
-        <button onclick="startGame()">Başlat</button>
-        <button onclick="pauseGame()">Durdur</button>
-        <button onclick="restartGame()">Sıfırla</button>
+    <div class="container">
+        <div class="feedback-notifications">
+            <p id="feedback"></p>
+        </div>
+        <header>
+            <h1>Bomba Partisi</h1>
+            <!-- Add any navigation links or buttons here -->
+        </header>
+    
+        <div class="syllable-display">
+            <h2>Hece: <span id="current-syllable">???</span></h2>
+        </div>
+    
+        <div class="timer">
+            <h3>Kalan zaman: <span id="timer">10</span> saniye</h3>
+        </div>
+    
+        <div class="word-input">
+            <input type="text" placeholder="Kelime" id="word-input">
+            <button onclick="submitWord()">Gönder</button>
+        </div>
+    
+        <div class="lives">
+            <!-- 🖤🖤🖤 -->
+            <!-- 💖💖💖 -->
+            <h2 id="lives">💖💖💖</h2>
+        </div>
+    
+        <div id="letter-box">
+            <div class="letter">a</div>
+            <div class="letter">b</div>
+            <div class="letter">c</div>
+            <div class="letter">ç</div>
+            <div class="letter">d</div>
+            <div class="letter">e</div>
+            <div class="letter">f</div>
+            <div class="letter">g</div>
+            <div class="letter">ğ</div>
+            <div class="letter">h</div>
+            <div class="letter">ı</div>
+            <div class="letter">i</div>
+            <div class="letter">j</div>
+            <div class="letter">k</div>
+            <div class="letter">l</div>
+            <div class="letter">m</div>
+            <div class="letter">n</div>
+            <div class="letter">o</div>
+            <div class="letter">ö</div>
+            <div class="letter">p</div>
+            <div class="letter">r</div>
+            <div class="letter">s</div>
+            <div class="letter">ş</div>
+            <div class="letter">t</div>
+            <div class="letter">u</div>
+            <div class="letter">ü</div>
+            <div class="letter">v</div>
+            <div class="letter">y</div>
+            <div class="letter">z</div>
+        </div>
+    
+        <div class="score">
+            <h3>Puan: <span id="score">0</span></h3>
+        </div>
+    
+        <div class="scoreboard" id="scoreboard">
+            <h3 id="scoreboard-title">Puan tablosu</h3>
+            <ul id="score-list">
+                <!-- Score entries will be dynamically added here -->
+            </ul>
+        </div>
+    
+        <div class="chat-interface">
+            <!-- Chat interface elements go here -->
+        </div>
+    
+        <div class="game-controls">
+            <button onclick="startGame()">Başlat</button>
+            <button onclick="endGame()">BİTİR</button>
+            <button onclick="restartGame()">Sıfırla</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
