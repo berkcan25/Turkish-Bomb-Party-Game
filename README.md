@@ -1,6 +1,6 @@
 # Turkish Bomb Party 💣💣
 
-[[Türkçe](https://github.com/berkcan25/Turkish-Bomb-Party-Game/blob/main/Turkish%20README.md)]
+[Türkçe](https://github.com/berkcan25/Turkish-Bomb-Party-Game/blob/main/Turkish%20README.md)
 
 
 
