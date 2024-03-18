@@ -1,6 +1,6 @@
 # Türkçe Bomb Party 💣💣
 
-[[English]]
+[English](https://github.com/berkcan25/Turkish-Bomb-Party-Game/blob/main/README.md)
 
 ## Genel Bakış
 Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre dolmadan önce verilen bir heceyle eşleşen kelimeyi bulmanız gerekir. Bomb Party'nin eğlencesinin daha falza kişiye ulaşması için bu yazılım yapılmıştır. Kelime haznenizi geliştirmeniz için birçok farklı hece içerir ve ve hızlı düşünebilme kabiliyetinizin için vaktiniz kısıtlıdır.
