@@ -11,6 +11,7 @@ Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre d
 - **Kelime Bilgisi**: Binlerce kelime ile kelime haznenizi genişletip tazeleyin!
 - **Kısıtlı Süre**: Yeni bir hece görüntülendiğinde geri sayım saati başlar ve sıfıra ulaştığında oyun biter.
 - **Puanlama Sistemi**: Oyuncular doğru tahmin ettikleri her kelime için bir puan kazanır ve puanlarını yerel olarak karşılaştırabilir.
+- **Canlar**: Bilemediğiniz zaman oynamaya devam edin! Canla kaybettikten sonra devam etme hakkın olur. Canlar, tüm harfleri toplayarak geri alınabilir! Bir harfi kazanmak için o harfi tahmin ederken kullanın. Ama dikkatli olun, bütün canlarınızı kaybederseniz oyun biter!
 - **Dinamik Kullanıcı Arayüzü**: Oyun, oyunculara performansınızı ve kelime bilginizi geliştirmek için faydalı ipuçları sunar.
 
 ## Başlarken
@@ -28,7 +29,7 @@ Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre d
 - Tahminiz yanlış ise, sizi uyaran ufak bir bildirim gelir ve tekrar deneme şansınız olur.
 - Oyun, saat sıfıra ulaşıncaya kadar devam eder ve ardından son puanınızı gösterir.
 
-#Resimler
+## Resimler
 ![SS3](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/8112ec9a-1d58-4b58-9295-b9dbc406714a)
 ![SS2](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/046ed3b9-71ad-424d-b9e5-b3889561670e)
 ![SS4](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/7fe1f070-ed20-45f4-972d-94fc88840796)
