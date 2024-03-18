@@ -6,15 +6,21 @@ let timerInterval;
 
 //game state
 let gameActive = false;
+let maxNumberOfLives = 3;
+let numberOfLives = 3;
 
 //html elements
 const timer = document.getElementById("timer");
+timer.innerHTML = timeLimit;
 const feedbackNotifs = document.getElementsByClassName("feedback-notifications")[0];
-let wordInput;
+const wordInput = document.getElementById("word-input");
+const letters = document.getElementsByClassName("letter");
 
 //global variables
 let validSyllables;
 let wordData;
+let usedWords;
+
 
 //uppercase lowercase
 function turkishUpperCase(text) {
@@ -35,14 +41,45 @@ function startTimer() {
         if (timeRemaining < 0) {
             clearInterval(timerInterval);
             timeRemaining = 0;
-            endGame();
+            let dead = decreaseLives();
+            if (dead) {
+                endGame();
+            } else {
+                wordInput.value = "";
+                showPotentialWord(document.getElementById("current-syllable").textContent);
+                fetchSyllable();
+                startTimer();
+                return;
+            }
         }
         timer.innerHTML = timeRemaining;
     }, 1000);
 }
 
 function restartGame() {
-     
+
+}
+
+function decreaseLives() {
+    numberOfLives--;
+    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+    let dead = numberOfLives <= 0;
+    return dead;
+}
+
+function increaseLives() {
+    if (numberOfLives >= maxNumberOfLives) {
+        return;
+    } else {
+        numberOfLives++;
+        document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+    }
+}
+
+function showPotentialWord(currentSyllable, isFinal = false) {
+    const validWords = getValidWords(currentSyllable);
+    const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
+    showFeedbackMessage(`${isFinal ? "Oyun Bitti!\n" : ""}Kullanabildiğin kelime: ${randomWord}`);
 }
 
 function endGame() {
@@ -50,34 +87,44 @@ function endGame() {
     clearInterval(timerInterval);
     gameActive = false;
     const currentSyllable = document.getElementById("current-syllable").textContent;
-    const validWords = getValidWords(currentSyllable);
-    const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
-    document.getElementById("current-syllable").innerHTML = "";
+    showPotentialWord(currentSyllable, true);
+
+    document.getElementById("current-syllable").innerHTML = "???";
     wordInput.value = "";
     wordInput.blur();
-    showFeedbackMessage(`Game Over!\nYou could have used: ${randomWord}`);
+
     if (parseInt(document.getElementById("score").textContent) > 0) {
         addScoreToScoreboard();
         document.getElementById("score").textContent = 0;
     }
-    // Additional game end logic
 }
 
 // 2. Fetching and Displaying Syllables
 function fetchSyllable() {
-    const randomIndex = Math.floor(Math.random() * validSyllables.length - 1);
-    const fetchedSyllable = validSyllables[randomIndex];
+    let includesAll = true;
+    let fetchedSyllable;
+    do {
+        const randomIndex = Math.floor(Math.random() * validSyllables.length - 1);
+        fetchedSyllable = validSyllables[randomIndex];
+        validWords = getValidWords(fetchedSyllable);
+        if (usedWords.length < validWords.length) break;
+        for (let i = 0; i < validWords.length; i++) {
+            if (!usedWords.includes(validWords[i])) {
+                includesAll = false;
+                break;
+            }
+        }
+    } while (includesAll);
     document.getElementById("current-syllable").innerHTML = fetchedSyllable;
 }
 
 // 3. Word Validation and Scoring
 function submitWord() {
     if (wordData === undefined || !gameActive) {
-        showFeedbackMessage("Please press start first.");
+        showFeedbackMessage("Önce oyunu başlat.");
         return;
     }
 
-    wordInput = document.getElementById("word-input");
     const enteredWord = turkishLowerCase(wordInput.value.trim());
 
     if (enteredWord === "") {
@@ -88,23 +135,59 @@ function submitWord() {
     const currentSyllable = document.getElementById("current-syllable").textContent;
     const validWords = getValidWords(currentSyllable);
 
-    if (!validWords.includes(enteredWord)) {
-        // showFeedbackMessage("Word is not valid. Please try again.");
+    if ((!validWords.includes(enteredWord))) {
+        showFeedbackMessage("Kelime bulunamadı. Başka bir kelime dene.");
+        return;
+    } else if (usedWords.includes(enteredWord)) {
+        showFeedbackMessage("Kelime zaten kullanılmıştır. Başka bir kelime dene.");
         return;
     } else {
+        wordInput.value = "";
+        usedWords.push(enteredWord);
         awardPoint();
+        updateLetters(enteredWord);
+        if (allLettersUsed()) {
+            increaseLives();
+            resetLetters();
+        }
         fetchSyllable();
         startTimer();
-        wordInput.value = "";
     }
 }
 
+function allLettersUsed() {
+    for (let i = 0; i < letters.length; i++) {
+        if (!letters[i].classList.contains("used")) {
+            return false;
+        }
+    }
+    return true
+}
+
+function updateLetters(enteredWord) {
+    for (let i = 0; i < letters.length; i++) {
+        console.log(letters[i]);
+        if (enteredWord.includes(letters[i].textContent)) {
+            letters[i].classList.add("used");
+        }
+    }
+}
+
+function resetLetters() {
+    for (let i = 0; i < letters.length; i++) {
+        letters[i].classList.remove("used");
+    }
+}
+
+let feedbackTimer = null;
+
 function showFeedbackMessage(message) {
+    clearTimeout(feedbackTimer);
     const feedbackElement = document.getElementById("feedback");
     feedbackNotifs.style.display = "block";
     feedbackElement.textContent = message;
     feedbackElement.style.display = "block";
-    setTimeout(() => {
+    feedbackTimer = setTimeout(() => {
         feedbackElement.style.display = "none";
         feedbackNotifs.style.display = "none";
     }, 5000);
@@ -118,10 +201,13 @@ function awardPoint() {
 
 // TODO: add score to local storage when you finish the game
 function addScoreToScoreboard() {
+    const scoreboardTitle = document.getElementById("scoreboard-title");
+    scoreboardTitle.style.display = "block";
     const scoreboardElement = document.getElementById("score-list");
     const score = parseInt(document.getElementById("score").textContent);
     const scoreEl = document.createElement("li");
-    scoreEl.textContent = `Score: ${score}`;
+    scoreEl.className = "score-item"
+    scoreEl.textContent = `Puan: ${score}`;
     // formatted date in locale
     scoreEl.title = new Date().toLocaleString();
     scoreboardElement.appendChild(scoreEl);
@@ -149,11 +235,14 @@ async function startGame() {
 }
 
 
+
 async function gameInit() {
+    resetLetters();
+    numberOfLives = 3;
+    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+
     //change in options
     const minWordCount = 30;
-    //makes js wait for the promise object before continuing
-    //add post json to server later
     const freqResponse = await fetch("./freqs.json")
     const freqData = await freqResponse.json();
     const syllables = Object.keys(freqData);
@@ -161,9 +250,10 @@ async function gameInit() {
 
     const wordResponse = await fetch("./words.json")
     wordData = await wordResponse.json();
-    const words = Object.keys(wordData);
-    validWords = words.filter((word) => wordData[word] > minWordCount);
 
+    wordInput.value = "";
+    wordInput.focus();
+    usedWords = [];
 }
 // 6. Interactivity and User Experience
 document.getElementById("word-input").addEventListener("keypress", function (event) {
@@ -171,6 +261,8 @@ document.getElementById("word-input").addEventListener("keypress", function (eve
         submitWord();
     }
 });
+
+
 
 
 // 7. Integration with HTML and CSS
