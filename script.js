@@ -5,7 +5,7 @@ const wordInput = document.getElementById("word-input");
 const letters = document.getElementsByClassName("letter");
 
 // Turn Timer and Game End
-let timeLimit = 10; // seconds
+let timeLimit = 30; // seconds
 let timerInterval;
 
 // Lives
