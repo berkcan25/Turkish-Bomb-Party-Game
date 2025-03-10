@@ -14,7 +14,7 @@ Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre d
 - **Canlar**: Bilemediğiniz zaman oynamaya devam edin! Canla kaybettikten sonra devam etme hakkın olur. Canlar, tüm harfleri toplayarak geri alınabilir! Bir harfi kazanmak için o harfi tahmin ederken kullanın. Ama dikkatli olun, bütün canlarınızı kaybederseniz oyun biter!
 - **Dinamik Kullanıcı Arayüzü**: Oyun, oyunculara performansınızı ve kelime bilginizi geliştirmek için faydalı ipuçları sunar.
 
-## Başlarken
+## Yükleyiş
 1. Depoyu klonlayın: `git clone https://github.com/your-username/bomb-party-clone.git`
 2. Tercih ettiğiniz kod düzenleyicide açın.
 3. Kelime listesini isteğinize göre biçimlendirmek için `turkish word fixer.py` dosyasını çalıştırın.
