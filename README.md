@@ -5,7 +5,7 @@
 ## Overview
 This project is a clone of the popular online word game "Bomb Party". The game challenges players to quickly think of words that match a given syllable before a timer runs out. This repository contains the code for replicating the gameplay experience of Bomb Party, including a wide range of syllables to help your vocabulary, with a turn timer to up the ante.
 
-![SS1](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/21d3e274-111d-4190-9fef-e12b709631a2)
+<img width="1516" height="1760" alt="image" src="https://github.com/user-attachments/assets/a6a1c905-530e-4e0c-a7e0-df69661d5bc2" />
 
 ## Features
 - **Word Knowledge**: Expand and renew your vocabulary with thousands of words!
@@ -19,8 +19,7 @@ This project is a clone of the popular online word game "Bomb Party". The game c
 2. Open the project directory in your preferred code editor.
 3. Run `turkish word fixer.py` to format the word list to your liking.
 4. Run `syllable finder.py`, making sure to clearly state file locations, to generate the JSON for the game.
-5. Customize the game settings at the top of the `script.js` file, such as timer duration and syllable list, as needed.
-6. Open `index.html` in a web browser to play the game.
+5. Open `index.html` in a web browser to play the game.
 
 ## Play
 - Upon starting the game, a syllable will be displayed, and the turn timer will begin counting down.
@@ -29,10 +28,10 @@ This project is a clone of the popular online word game "Bomb Party". The game c
 - If the word is incorrect or has already been guessed, you will receive a warning message, and you can try again!
 - The game continues until the timer runs out, at which point the final scores are displayed.
 
-## Resimler
-![SS3](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/8112ec9a-1d58-4b58-9295-b9dbc406714a)
-![SS2](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/046ed3b9-71ad-424d-b9e5-b3889561670e)
-![SS4](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/7fe1f070-ed20-45f4-972d-94fc88840796)
+## Images
+<img width="1493" height="1769" alt="image" src="https://github.com/user-attachments/assets/85ecd843-5f63-4618-b947-4f3d29cbdeff" />
+<img width="1487" height="1763" alt="image" src="https://github.com/user-attachments/assets/2511842c-3b3c-4a87-9769-263856996a5d" />
+
 
 ## Contributing
 Contributions to this project are welcome! Your contributions help us develop the game and help it to reach more people! If you have any ideas for improvements or new features, feel free to open an issue or submit a pull request.
