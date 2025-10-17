@@ -5,7 +5,7 @@
 ## Genel Bakış
 Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre dolmadan önce verilen bir heceyle eşleşen kelimeyi bulmanız gerekir. Bomb Party'nin eğlencesinin daha falza kişiye ulaşması için bu yazılım yapılmıştır. Kelime haznenizi geliştirmeniz için birçok farklı hece içerir ve ve hızlı düşünebilme kabiliyetinizin için vaktiniz kısıtlıdır.
 
-![SS1](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/21d3e274-111d-4190-9fef-e12b709631a2)
+<img width="1516" height="1760" alt="image" src="https://github.com/user-attachments/assets/a6a1c905-530e-4e0c-a7e0-df69661d5bc2" />
 
 ## Özellikler
 - **Kelime Bilgisi**: Binlerce kelime ile kelime haznenizi genişletip tazeleyin!
@@ -19,8 +19,7 @@ Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre d
 2. Tercih ettiğiniz kod düzenleyicide açın.
 3. Kelime listesini isteğinize göre biçimlendirmek için `turkish word fixer.py` dosyasını çalıştırın.
 4. Oyunda kullanılacak JSON dosyasını oluşturmak için `syllable finder.py` dosyasını çalıştırın. Dosya konumlarını doğru belirlediğinizden emin olun.
-5. Tercihlerinze göre, `script.js` dosyasının en üstünde bulunan zamanlayıcı süresi ve hece listesi gibi oyun ayarlarını özelleştirin.
-6. Oyunu oynamak için `index.html` dosyasını bir web tarayıcısında açın.
+5. Oyunu oynamak için `index.html` dosyasını bir web tarayıcısında açın.
 
 ## Oynayış
 - Oyun başladığında, bir hece görüntülenir ve saat geri saymaya başlar.
@@ -29,10 +28,9 @@ Bu proje, kelime oyunu "Bomb Party"nin Türkçeye çevrilmiş versiyonu. Süre d
 - Tahminiz yanlış ise, sizi uyaran ufak bir bildirim gelir ve tekrar deneme şansınız olur.
 - Oyun, saat sıfıra ulaşıncaya kadar devam eder ve ardından son puanınızı gösterir.
 
-## Resimler
-![SS3](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/8112ec9a-1d58-4b58-9295-b9dbc406714a)
-![SS2](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/046ed3b9-71ad-424d-b9e5-b3889561670e)
-![SS4](https://github.com/berkcan25/Turkish-Bomb-Party-Game/assets/103621562/7fe1f070-ed20-45f4-972d-94fc88840796)
+## Görüntüler
+<img width="1493" height="1769" alt="image" src="https://github.com/user-attachments/assets/85ecd843-5f63-4618-b947-4f3d29cbdeff" />
+<img width="1487" height="1763" alt="image" src="https://github.com/user-attachments/assets/2511842c-3b3c-4a87-9769-263856996a5d" />
 
 ## Katkıda Bulunma
 Eğer oyunu beğenip katkıda bulunmak isterseniz hiç çekinmeyin! Bu yardımlarınız sayesinde oyunu geliştirip daha fazla kişiye ulaşabiliriz! Düzeltmeler veya yeni özellikler için herhangi bir fikriniz varsa, "issue" veya "pull request" gönderebilirsiniz.
