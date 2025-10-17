@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bomba Partisi Klonu</title>
+    <title>Hecele!</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,8 +12,7 @@
             <p id="feedback"></p>
         </div>
         <header>
-            <h1>Bomba Partisi</h1>
-            <!-- Add any navigation links or buttons here -->
+            <h1>Hecele!</h1>
         </header>
     
         <div class="syllable-display">
@@ -30,8 +29,6 @@
         </div>
     
         <div class="lives">
-            <!-- 🖤🖤🖤 -->
-            <!-- 💖💖💖 -->
             <h2 id="lives">💖💖💖</h2>
         </div>
     
@@ -74,18 +71,57 @@
         <div class="scoreboard" id="scoreboard">
             <h3 id="scoreboard-title">Puan tablosu</h3>
             <ul id="score-list">
-                <!-- Score entries will be dynamically added here -->
             </ul>
         </div>
     
         <div class="chat-interface">
-            <!-- Chat interface elements go here -->
         </div>
     
         <div class="game-controls">
             <button onclick="startGame()">Başlat</button>
             <button onclick="endGame()">BİTİR</button>
             <button onclick="restartGame()">Sıfırla</button>
+            <button id="settings-btn" onclick="toggleSettingsBox()">Ayarlar</button>
+            <button id="instructions-btn" onclick="toggleInstructionsBox()">Nasıl Oynanır?</button>
+        </div>
+    </div>
+
+    <div id="settings-box" class="settings-box-overlay hidden">
+        <div class="settings-box-content">
+            <h2>Oyun Ayarları</h2>
+            <div class="settings-grid">
+                <label for="time-limit-input">Tur Süresi (saniye):</label>
+                <input type="number" id="time-limit-input" value="30" min="5" max="120">
+
+                <label for="start-lives-input">Başlangıç Canı:</label>
+                <input type="number" id="start-lives-input" value="3" min="1" max="10">
+
+                <label for="max-lives-input">Maksimum Can:</label>
+                <input type="number" id="max-lives-input" value="3" min="1" max="10">
+
+                <label for="min-freq-input">Minimum Hece Başına Kelime Sayısı:</label>
+                <input type="number" id="min-freq-input" value="30" min="1">
+
+                <label for="max-freq-input">Maximum Hece Başına Kelime Sayısı:</label>
+                <input type="number" id="max-freq-input" value="1000" min="50">
+            </div>
+            <button onclick="saveSettings()">Kaydet ve Kapat</button>
+        </div>
+    </div>
+
+    <div id="instructions-box" class="instructions-box-overlay hidden">
+        <div class="instructions-box-content">
+            <h2>Nasıl Oynanır?</h2>
+            <p><strong>Amaç:</strong> Süre dolmadan önce ekranda gösterilen heceyi içeren geçerli bir kelime yazmak.</p>
+            <ul>
+                <li><strong>Başlat:</strong> Oyunu başlatmak için "Başlat" düğmesine basın.</li>
+                <li><strong>Kelime Girin:</strong> Ekranda bir hece belirecektir. Bu heceyi içeren bir kelime yazın ve "Gönder"e basın.</li>
+                <li><strong>Süre:</strong> Her hece için belirli bir süreniz var. Süre dolarsa bir can kaybedersiniz!</li>
+                <li><strong>Canlar:</strong> Canlarınız bittiğinde oyun sona erer.</li>
+                <li><strong>Puanlama:</strong> Her geçerli kelime için puan kazanırsınız.</li>
+                <li><strong>Harfleri Topla:</strong> Yazdığınız kelimelerdeki harfler aşağıdaki harf kutusunda işaretlenir. Tüm harfleri toplarsanız fazladan bir can kazanırsınız!</li>
+            </ul>
+            <button onclick="toggleInstructionsBox()">Anladım!</button>
         </div>
     </div>
 

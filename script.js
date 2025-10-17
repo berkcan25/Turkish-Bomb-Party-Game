@@ -1,28 +1,146 @@
-//html elements
+const settingsBox = document.getElementById('settings-box');
+const instructionsBox = document.getElementById('instructions-box');
+const timeLimitInput = document.getElementById('time-limit-input');
+const startLivesInput = document.getElementById('start-lives-input');
+const maxLivesInput = document.getElementById('max-lives-input');
+const minFreqInput = document.getElementById('min-freq-input');
+const maxFreqInput = document.getElementById('max-freq-input');
+const settingsBtn = document.getElementById('settings-btn');
+const instructionsBtn = document.getElementById('instructions-btn');
+
+function toggleSettingsBox() {
+    settingsBox.classList.toggle('hidden');
+}
+
+function toggleInstructionsBox() {
+    instructionsBox.classList.toggle('hidden');
+}
+
+function saveSettingsToLocalStorage() {
+    const settings = {
+        timeLimit: parseInt(timeLimitInput.value, 10),
+        startLives: parseInt(startLivesInput.value, 10),
+        maxLives: parseInt(maxLivesInput.value, 10),
+        minFreq: parseInt(minFreqInput.value, 10),
+        maxFreq: parseInt(maxFreqInput.value, 10)
+    };
+    localStorage.setItem('bombaPartisiSettings', JSON.stringify(settings));
+}
+
+function loadSettingsFromLocalStorage() {
+    const savedSettings = localStorage.getItem('bombaPartisiSettings');
+    if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        timeLimit = settings.timeLimit || 30;
+        numberOfLives = settings.startLives || 3;
+        maxNumberOfLives = settings.maxLives || 3;
+
+        timeLimitInput.value = settings.timeLimit;
+        startLivesInput.value = settings.startLives;
+        maxLivesInput.value = settings.maxLives;
+        minFreqInput.value = settings.minFreq;
+        maxFreqInput.value = settings.maxFreq;
+    }
+}
+
+function saveSettings() {
+    let parsedTime = Math.round(parseFloat(timeLimitInput.value));
+    if (isNaN(parsedTime) || parsedTime < 1) {
+        parsedTime = 30;
+        showFeedbackMessage("Tur süresi en az 1 saniye olmalıdır.");
+    }
+    timeLimit = parsedTime;
+    timeLimitInput.value = timeLimit;
+
+    let parsedMaxLives = Math.round(parseFloat(maxLivesInput.value));
+    if (isNaN(parsedMaxLives) || parsedMaxLives < 1) {
+        parsedMaxLives = 3;
+        showFeedbackMessage("Maksimum can sayısı en az 1 olmalıdır.");
+    }
+    maxNumberOfLives = parsedMaxLives;
+    maxLivesInput.value = maxNumberOfLives;
+
+    let parsedStartLives = Math.round(parseFloat(startLivesInput.value));
+    if (isNaN(parsedStartLives) || parsedStartLives < 1) {
+        parsedStartLives = 3;
+        showFeedbackMessage("Başlangıç canı en az 1 olmalıdır.");
+    }
+    numberOfLives = parsedStartLives;
+    startLivesInput.value = numberOfLives;
+    
+    let parsedMinFreq = Math.round(parseFloat(minFreqInput.value));
+    if (isNaN(parsedMinFreq) || parsedMinFreq < 1) {
+        parsedMinFreq = 30; 
+        showFeedbackMessage("Minimum hece başına kelime sayısı en az 1 olmalıdır.");
+    }
+    let minFreq = parsedMinFreq;
+    minFreqInput.value = minFreq;
+
+    let parsedMaxFreq = Math.round(parseFloat(maxFreqInput.value));
+    if (isNaN(parsedMaxFreq) || parsedMaxFreq < 1) {
+        parsedMaxFreq = 1000;
+    }
+    let maxFreq = parsedMaxFreq;
+    maxFreqInput.value = maxFreq;
+
+    if (numberOfLives > maxNumberOfLives) {
+        numberOfLives = maxNumberOfLives;
+        startLivesInput.value = maxNumberOfLives;
+        showFeedbackMessage("Başlangıç canı, maksimum candan fazla olamaz!");
+    }
+
+    if (minFreq >= maxFreq) {
+        minFreq = maxFreq - 1;
+        if (minFreq < 1) {
+            minFreq = 1;
+        }
+        minFreqInput.value = minFreq;
+        showFeedbackMessage("Maximum hece başına kelime sayısı, minimum hece başına kelime sayısından küçük olamaz!");
+    }
+
+    if (!gameActive) {
+        timer.textContent = timeLimit;
+    }
+    
+    saveSettingsToLocalStorage();
+    updateLivesDisplay();
+    toggleSettingsBox();
+}
+
+function updateLivesDisplay() {
+    let hearts = '💖'.repeat(numberOfLives);
+    let brokenHearts = '🖤'.repeat(Math.max(0, maxNumberOfLives - numberOfLives));
+    document.getElementById("lives").innerHTML = hearts + brokenHearts;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadSettingsFromLocalStorage();
+    timer.textContent = timeLimit;
+    updateLivesDisplay();
+
+    if (!localStorage.getItem('bombaPartisiFirstVisit')) {
+        toggleInstructionsBox();
+        localStorage.setItem('bombaPartisiFirstVisit', 'true');
+    }
+});
+
 const timer = document.getElementById("timer");
 const feedbackNotifs = document.getElementsByClassName("feedback-notifications")[0];
 const wordInput = document.getElementById("word-input");
 const letters = document.getElementsByClassName("letter");
 
-// Turn Timer and Game End
-let timeLimit = 30; // seconds
+let timeLimit = 30;
 let timerInterval;
 
-// Lives
 let maxNumberOfLives = 3;
 let numberOfLives = 3;
 
-
-// game state
 let gameActive = false;
 
-
-// global variables
 let validSyllables;
 let wordData;
 let usedWords;
 
-// On Startup
 document.getElementById("word-input").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         submitWord();
@@ -31,11 +149,9 @@ document.getElementById("word-input").addEventListener("keypress", function (eve
 
 timer.innerHTML = timeLimit;
 
-
-// Game Flow Control
-//TODO: reset points 
 async function startGame() {
     if (!gameActive) {
+        settingsBtn.disabled = true;
         gameActive = true;
         await gameInit();
         fetchSyllable();
@@ -45,17 +161,24 @@ async function startGame() {
 
 async function gameInit() {
     resetLetters();
-    numberOfLives = 3;
-    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
+    
+    numberOfLives = parseInt(startLivesInput.value, 10);
+    maxNumberOfLives = parseInt(maxLivesInput.value, 10);
+    updateLivesDisplay();
 
-    //change in options
-    const minWordCount = 30;
-    const freqResponse = await fetch("./freqs.json")
+    const minWordCount = parseInt(minFreqInput.value, 10);
+    const maxWordCount = parseInt(maxFreqInput.value, 10);
+    
+    const freqResponse = await fetch("./freqs.json");
     const freqData = await freqResponse.json();
     const syllables = Object.keys(freqData);
-    validSyllables = syllables.filter((syllable) => freqData[syllable] > minWordCount);
+    
+    validSyllables = syllables.filter((syllable) => {
+        const count = freqData[syllable];
+        return count >= minWordCount && count <= maxWordCount;
+    });
 
-    const wordResponse = await fetch("./words.json")
+    const wordResponse = await fetch("./words.json");
     wordData = await wordResponse.json();
 
     wordInput.value = "";
@@ -64,10 +187,10 @@ async function gameInit() {
 }
 
 function startTimer() {
-    clearInterval(timerInterval)
+    clearInterval(timerInterval);
     timer.innerHTML = timeLimit;
     let timeRemaining = timeLimit;
-    const start = Date.now()
+    const start = Date.now();
     timerInterval = setInterval(() => {
         let delta = Date.now() - start;
         timeRemaining = timeLimit - Math.floor(delta / 1000);
@@ -90,12 +213,14 @@ function startTimer() {
 }
 
 function endGame() {
-    // Display final scores and handle game end logic
+    settingsBtn.disabled = false;
     clearInterval(timerInterval);
     gameActive = false;
     const currentSyllable = document.getElementById("current-syllable").textContent;
-    showPotentialWord(currentSyllable, true);
-
+    if (wordData && currentSyllable !== "???") {
+        showPotentialWord(currentSyllable, true);
+    }
+    
     document.getElementById("current-syllable").innerHTML = "???";
     wordInput.value = "";
     wordInput.blur();
@@ -106,77 +231,85 @@ function endGame() {
     }
 }
 
-
 function restartGame() {
     endGame();
     startGame();
 }
 
-// Helper Functions
-
-// Lives
 function decreaseLives() {
     numberOfLives--;
-    document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
-    let dead = numberOfLives <= 0;
+    updateLivesDisplay();
+    let dead = numberOfLives < 0;
+    if (dead) numberOfLives = 0;
     return dead;
 }
 
 function increaseLives() {
     if (numberOfLives >= maxNumberOfLives) {
         return;
-    } else {
-        numberOfLives++;
-        document.getElementById("lives").innerHTML = `💖`.repeat(numberOfLives) + `🖤`.repeat(3 - numberOfLives);
     }
+    numberOfLives++;
+    updateLivesDisplay();
 }
 
-// Words/Syllables
 const getValidWords = ((syllable) => wordData[syllable]);
 
 function showPotentialWord(currentSyllable, isFinal = false) {
     const validWords = getValidWords(currentSyllable);
-    const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
-    showFeedbackMessage(`${isFinal ? "Oyun Bitti!\n" : ""}Kullanabildiğin kelime: ${randomWord}`);
+    if (validWords && validWords.length > 0) {
+        const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
+        showFeedbackMessage(`${isFinal ? "Oyun Bitti!\n" : ""}Kullanabildiğin kelime: ${randomWord}`);
+    } else {
+        showFeedbackMessage(`${isFinal ? "Oyun Bitti!" : "Sıradaki tur!"}`);
+    }
 }
 
-
-// Fetching and Displaying Syllables
 function fetchSyllable() {
     let includesAll = true;
     let fetchedSyllable;
+    let attempts = 0;
+    
+    if (validSyllables.length === 0) {
+        showFeedbackMessage("Ayarlarla eşleşen hece bulunamadı!");
+        endGame();
+        return;
+    }
+
     do {
-        const randomIndex = Math.floor(Math.random() * validSyllables.length - 1);
+        const randomIndex = Math.floor(Math.random() * validSyllables.length);
         fetchedSyllable = validSyllables[randomIndex];
-        validWords = getValidWords(fetchedSyllable);
+        validWords = getValidWords(fetchedSyllable) || [];
+        
         if (usedWords.length < validWords.length) break;
-        for (let i = 0; i < validWords.length; i++) {
-            if (!usedWords.includes(validWords[i])) {
-                includesAll = false;
-                break;
-            }
+
+        includesAll = validWords.every(word => usedWords.includes(word));
+        attempts++;
+        if (attempts > validSyllables.length) {
+            showFeedbackMessage("Tüm kelimeler kullanıldı!");
+            endGame();
+            return;
         }
     } while (includesAll);
+
     document.getElementById("current-syllable").innerHTML = fetchedSyllable;
 }
 
 function submitWord() {
     if (wordData === undefined || !gameActive) {
-        showFeedbackMessage("Önce oyunu başlat.");
+        showFeedbackMessage("Önce oyunu başlatın.");
         return;
     }
 
     const enteredWord = turkishLowerCase(wordInput.value.trim());
 
     if (enteredWord === "") {
-        // showFeedbackMessage("Please enter a word.");
         return;
     }
 
     const currentSyllable = document.getElementById("current-syllable").textContent;
     const validWords = getValidWords(currentSyllable);
 
-    if ((!validWords.includes(enteredWord))) {
+    if (!validWords || !validWords.includes(enteredWord)) {
         showFeedbackMessage("Kelime bulunamadı. Başka bir kelime dene.");
         return;
     } else if (usedWords.includes(enteredWord)) {
@@ -196,19 +329,17 @@ function submitWord() {
     }
 }
 
-// Letters
 function allLettersUsed() {
     for (let i = 0; i < letters.length; i++) {
         if (!letters[i].classList.contains("used")) {
             return false;
         }
     }
-    return true
+    return true;
 }
 
 function updateLetters(enteredWord) {
     for (let i = 0; i < letters.length; i++) {
-        console.log(letters[i]);
         if (enteredWord.includes(letters[i].textContent)) {
             letters[i].classList.add("used");
         }
@@ -221,16 +352,14 @@ function resetLetters() {
     }
 }
 
-//uppercase lowercase
 function turkishUpperCase(text) {
     return text.replace(/i/g, "İ").replace(/ı/g, "I").toUpperCase();
 }
+
 function turkishLowerCase(text) {
     return text.replace(/I/g, "ı").replace(/İ/g, "i").toLowerCase();
 }
 
-
-// Feedback
 let feedbackTimer = null;
 
 function showFeedbackMessage(message) {
@@ -245,23 +374,20 @@ function showFeedbackMessage(message) {
     }, 5000);
 }
 
-// Score
 function awardPoint() {
     const scoreElement = document.getElementById("score");
     let currentScore = parseInt(scoreElement.textContent);
     scoreElement.textContent = currentScore + 1;
 }
 
-// TODO: add score to local storage when you finish the game
 function addScoreToScoreboard() {
     const scoreboardTitle = document.getElementById("scoreboard-title");
     scoreboardTitle.style.display = "block";
     const scoreboardElement = document.getElementById("score-list");
     const score = parseInt(document.getElementById("score").textContent);
     const scoreEl = document.createElement("li");
-    scoreEl.className = "score-item"
+    scoreEl.className = "score-item";
     scoreEl.textContent = `Puan: ${score}`;
-    // formatted date in locale
     scoreEl.title = new Date().toLocaleString();
     scoreboardElement.appendChild(scoreEl);
 }

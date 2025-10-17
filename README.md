@@ -1,4 +1,4 @@
-# Turkish Bomb Party 💣💣
+# Hecele! 💣💣
 
 [Türkçe](https://github.com/berkcan25/Turkish-Bomb-Party-Game/blob/main/Turkish%20README.md) 🇹🇷
 
