@@ -1,4 +1,4 @@
-# Hecele! 💣💣
+# Hecele! 💣💣 https://turkish-bomb-party.netlify.app/
 
 [English](https://github.com/berkcan25/Turkish-Bomb-Party-Game/blob/main/README.md)
 
